@@ -3,7 +3,7 @@ default:
   NAME: order_service
   HOST: 0.0.0.0
   PORT: 8001
-  FAST_API_PATH: src.application:app
+  FAST_API_PATH: src.application.app:order_app
   LOG_LEVEL: info
   RELOADED: True
   POSTGRES:
