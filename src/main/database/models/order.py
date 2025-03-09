@@ -6,7 +6,7 @@ from sqlalchemy.dialects.postgresql import ENUM, UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
 from domain.order.entities.enums import OrderStatus, PaymentMethod
-from src.infrastructure.database.models.base import Base
+from main.database.models import Base
 
 
 class Order(Base):

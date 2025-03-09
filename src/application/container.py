@@ -1,9 +1,11 @@
 from adapters.alchemy_adapter import AlchemyAdapter
 from application.config import settings
+from domain.order.repositories.read_repository import OrderReadRepository
+from domain.order.repositories.write_repository import OrderWriteRepository
 from main.common.singleton import OnlyContainer, Singleton
 
 
-class Provider(Singleton):
+class Container(Singleton):
 
     alchemy_manager = OnlyContainer(
         AlchemyAdapter,
@@ -14,4 +16,14 @@ class Provider(Singleton):
         port=settings.POSTGRES.port,
         database=settings.POSTGRES.database,
         echo=settings.POSTGRES.echo,
+    )
+
+    order_write_manager = OnlyContainer(
+        OrderWriteRepository,
+        session_adapter=alchemy_manager(),
+    )
+
+    order_read_manager = OnlyContainer(
+        OrderReadRepository,
+        session_adapter=alchemy_manager(),
     )

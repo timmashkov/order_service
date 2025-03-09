@@ -10,7 +10,7 @@ class Singleton:
         return cls._instance
 
 
-class OnlyContainer(BaseObject, Singleton):
+class OnlyContainer(BaseObject):
     def __init__(self, class_type, *args, **kwargs):
         self.class_object = None
         super().__init__(class_type, *args, **kwargs)

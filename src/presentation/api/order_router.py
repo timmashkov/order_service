@@ -1,0 +1,56 @@
+from typing import List, Union
+from uuid import UUID
+
+from fastapi import APIRouter, Depends
+from pydantic import BaseModel
+
+from application.services.order_service import OrderService
+from domain.order.entities.model import OrderIncomingData, OrderResultData
+from main.common.router_interface import AbstractRouter
+
+
+class OrderRouter(AbstractRouter):
+    api_router = APIRouter(prefix="/order", tags=["Order"])
+    service_client: OrderService = Depends(OrderService)
+    input_model: BaseModel = OrderIncomingData
+    output_model: BaseModel = OrderResultData
+
+    @staticmethod
+    @api_router.get("/{uuid}", response_model=output_model)
+    async def get_object(
+        uuid: Union[str, UUID],
+        order_provider: OrderService = service_client,
+    ) -> output_model:
+        return await order_provider.get_item(uuid=uuid)
+
+    @staticmethod
+    @api_router.get("/", response_model=List[output_model])
+    async def get_objects(
+        order_provider: OrderService = service_client,
+    ) -> List[output_model]:
+        return await order_provider.get_items()
+
+    @staticmethod
+    @api_router.post("/", response_model=output_model)
+    async def create_object(
+        data: input_model,
+        order_provider: OrderService = service_client,
+    ) -> output_model:
+        return await order_provider.create_item(data=data)
+
+    @staticmethod
+    @api_router.patch("/{uuid}", response_model=output_model)
+    async def update_object(
+        uuid: Union[str, UUID],
+        data: input_model,
+        order_provider: OrderService = service_client,
+    ) -> output_model:
+        return await order_provider.update_item(uuid=uuid, data=data)
+
+    @staticmethod
+    @api_router.delete("/{uuid}", response_model=output_model)
+    async def delete_object(
+        uuid: Union[str, UUID],
+        order_provider: OrderService = service_client,
+    ) -> output_model:
+        return await order_provider.delete_item(uuid=uuid)
