@@ -1,4 +1,4 @@
-from infrastructure.base.base_entity import BaseEntity
+from main.common.base_object import BaseObject
 
 
 class Singleton:
@@ -10,7 +10,7 @@ class Singleton:
         return cls._instance
 
 
-class OnlyContainer(BaseEntity, Singleton):
+class OnlyContainer(BaseObject, Singleton):
     def __init__(self, class_type, *args, **kwargs):
         self.class_object = None
         super().__init__(class_type, *args, **kwargs)

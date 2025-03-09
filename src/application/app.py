@@ -1,5 +1,5 @@
-from infrastructure.server.config import settings
-from infrastructure.server.server import ApiServer
+from application.config import settings
+from application.server import ApiServer
 
 order_app = ApiServer(
     name=settings.NAME,

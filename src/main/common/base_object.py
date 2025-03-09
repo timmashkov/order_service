@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from contextlib import contextmanager
 
 
-class BaseEntity(ABC):
+class BaseObject(ABC):
     def __init__(self, class_type, *args, **kwargs) -> None:
         self.class_type = class_type
         self.args = args

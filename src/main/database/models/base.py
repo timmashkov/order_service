@@ -18,20 +18,18 @@ class Base(DeclarativeBase):
         primary_key=True,
         default=uuid.uuid4,
         index=True,
-        comment="Уникальный айди записи"
+        comment="Уникальный айди записи",
     )
 
     created_at: Mapped[datetime] = mapped_column(
-        server_default=func.now(),
-        default=datetime.now(),
-        comment="Дата создания"
+        server_default=func.now(), default=datetime.now(), comment="Дата создания"
     )
 
     updated_at: Mapped[datetime] = mapped_column(
         server_default=func.now(),
         default=datetime.now(),
         onupdate=datetime.now(),
-        comment="Дата обновления"
+        comment="Дата обновления",
     )
 
     def as_dict(self):
