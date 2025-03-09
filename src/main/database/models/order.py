@@ -1,12 +1,16 @@
 import uuid
 from decimal import Decimal
+from typing import TYPE_CHECKING, List
 
 from sqlalchemy import DECIMAL, Boolean, String, Text
 from sqlalchemy.dialects.postgresql import ENUM, UUID
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from domain.order.entities.enums import OrderStatus, PaymentMethod
 from main.database.models import Base
+
+if TYPE_CHECKING:
+    from main.database.models import OrderItem
 
 
 class Order(Base):
@@ -28,3 +32,11 @@ class Order(Base):
         ENUM(PaymentMethod, name="pay_method"), comment="Способ оплаты"
     )
     comment: Mapped[str] = mapped_column(String, comment="Комментарий к заказу")
+
+    items: Mapped[List["OrderItem"]] = relationship(
+        "OrderItem",
+        back_populates="order",
+        cascade="all, delete-orphan",
+        passive_updates=True,
+        passive_deletes=True,
+    )
