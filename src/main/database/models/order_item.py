@@ -12,6 +12,8 @@ if TYPE_CHECKING:
 
 class OrderItem(Base):
 
+    __tablename__ = "order_items"
+
     quantity: Mapped[int] = mapped_column(
         Integer, nullable=False, comment="Количество элементов"
     )

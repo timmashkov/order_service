@@ -1,0 +1,56 @@
+from typing import List, Union
+from uuid import UUID
+
+from fastapi import APIRouter, Depends
+from pydantic import BaseModel
+
+from application.services.order_item_service import OrderItemService
+from domain.order_item.entities.model import OrderItemIncomingData, OrderItemResultData
+from main.common.router_interface import AbstractRouter
+
+
+class OrderItemRouter(AbstractRouter):
+    api_router = APIRouter(prefix="/order_item", tags=["OrderItem"])
+    service_client: OrderItemService = Depends(OrderItemService)
+    input_model: BaseModel = OrderItemIncomingData
+    output_model: BaseModel = OrderItemResultData
+
+    @staticmethod
+    @api_router.get("/{uuid}", response_model=output_model)
+    async def get_object(
+        uuid: Union[str, UUID],
+        order_provider: OrderItemService = service_client,
+    ) -> output_model:
+        return await order_provider.get_item(uuid=uuid)
+
+    @staticmethod
+    @api_router.get("/", response_model=List[output_model])
+    async def get_objects(
+        order_provider: OrderItemService = service_client,
+    ) -> List[output_model]:
+        return await order_provider.get_items()
+
+    @staticmethod
+    @api_router.post("/", response_model=output_model)
+    async def create_object(
+        data: input_model,
+        order_provider: OrderItemService = service_client,
+    ) -> output_model:
+        return await order_provider.create_item(data=data)
+
+    @staticmethod
+    @api_router.patch("/{uuid}", response_model=output_model)
+    async def update_object(
+        uuid: Union[str, UUID],
+        data: input_model,
+        order_provider: OrderItemService = service_client,
+    ) -> output_model:
+        return await order_provider.update_item(uuid=uuid, data=data)
+
+    @staticmethod
+    @api_router.delete("/{uuid}", response_model=output_model)
+    async def delete_object(
+        uuid: Union[str, UUID],
+        order_provider: OrderItemService = service_client,
+    ) -> output_model:
+        return await order_provider.delete_item(uuid=uuid)

@@ -2,6 +2,8 @@ from adapters.alchemy_adapter import AlchemyAdapter
 from application.config import settings
 from domain.order.repositories.read_repository import OrderReadRepository
 from domain.order.repositories.write_repository import OrderWriteRepository
+from domain.order_item.repositories.read_repository import OrderItemReadRepository
+from domain.order_item.repositories.write_repository import OrderItemWriteRepository
 from main.common.singleton import OnlyContainer, Singleton
 
 
@@ -25,5 +27,15 @@ class Container(Singleton):
 
     order_read_manager = OnlyContainer(
         OrderReadRepository,
+        session_adapter=alchemy_manager(),
+    )
+
+    order_item_read_manager = OnlyContainer(
+        OrderItemReadRepository,
+        session_adapter=alchemy_manager(),
+    )
+
+    order_item_write_manager = OnlyContainer(
+        OrderItemWriteRepository,
         session_adapter=alchemy_manager(),
     )

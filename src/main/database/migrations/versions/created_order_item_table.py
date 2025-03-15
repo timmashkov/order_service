@@ -8,9 +8,8 @@ Create Date: 2025-03-09 15:09:37.010641
 
 from typing import Sequence, Union
 
-from alembic import op
 import sqlalchemy as sa
-
+from alembic import op
 
 # revision identifiers, used by Alembic.
 revision: str = "285f1baa702c"
@@ -31,12 +30,8 @@ def upgrade() -> None:
             comment="Количество элементов",
         ),
         sa.Column("order_id", sa.UUID(), nullable=True, comment="Айди заказа"),
-        sa.Column(
-            "item_uuid", sa.UUID(), nullable=False, comment="Айди товара"
-        ),
-        sa.Column(
-            "uuid", sa.UUID(), nullable=False, comment="Уникальный айди записи"
-        ),
+        sa.Column("item_uuid", sa.UUID(), nullable=False, comment="Айди товара"),
+        sa.Column("uuid", sa.UUID(), nullable=False, comment="Уникальный айди записи"),
         sa.Column(
             "created_at",
             sa.DateTime(),
@@ -51,9 +46,7 @@ def upgrade() -> None:
             nullable=False,
             comment="Дата обновления",
         ),
-        sa.ForeignKeyConstraint(
-            ["order_id"], ["orders.uuid"], ondelete="CASCADE"
-        ),
+        sa.ForeignKeyConstraint(["order_id"], ["orders.uuid"], ondelete="CASCADE"),
         sa.PrimaryKeyConstraint("uuid"),
     )
     op.create_index(
@@ -62,9 +55,7 @@ def upgrade() -> None:
         ["item_uuid"],
         unique=True,
     )
-    op.create_index(
-        op.f("ix_order_items_uuid"), "order_items", ["uuid"], unique=False
-    )
+    op.create_index(op.f("ix_order_items_uuid"), "order_items", ["uuid"], unique=False)
     # ### end Alembic commands ###
 
 
