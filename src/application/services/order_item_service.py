@@ -1,10 +1,10 @@
-from typing import Union
+from typing import Any, Union
 from uuid import UUID
 
 from fastapi import Depends
 
 from application.container import Container
-from domain.order.entities.model import OrderIncomingData
+from domain.order_item.entities.model import OrderItemIncomingData
 from main.common.repository_interfaces import (
     AbstractReadRepository,
     AbstractWriteRepository,
@@ -28,13 +28,13 @@ class OrderItemService(Singleton):
     async def get_item(self, uuid: Union[str, UUID]):
         return await self.read_repository.get_item(uuid=uuid)
 
-    async def get_items(self):
-        return await self.read_repository.get_items()
+    async def get_items(self, filters: Any = None):
+        return await self.read_repository.find(filters=filters)
 
-    async def create_item(self, data: OrderIncomingData):
+    async def create_item(self, data: OrderItemIncomingData):
         return await self.write_repository.create_item(**data.model_dump())
 
-    async def update_item(self, uuid: Union[str, UUID], data: OrderIncomingData):
+    async def update_item(self, uuid: Union[str, UUID], data: OrderItemIncomingData):
         intel = data.model_dump()
         intel["uuid"] = uuid
         return await self.write_repository.update_item(**intel)

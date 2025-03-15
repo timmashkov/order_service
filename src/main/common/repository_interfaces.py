@@ -2,15 +2,21 @@ from abc import ABC, abstractmethod
 from typing import Any, Union
 from uuid import UUID
 
+from sqlalchemy import select
+
 
 class AbstractReadRepository(ABC):
+
+    @classmethod
+    def __set_filter(cls, query: select, filters: Any = None) -> select:
+        pass
 
     @abstractmethod
     async def get_item(self, uuid: Union[str, UUID]) -> Any:
         pass
 
     @abstractmethod
-    async def get_items(self, *args: Any, **kwargs: Any) -> Any:
+    async def find(self, *args: Any, **kwargs: Any) -> Any:
         pass
 
 

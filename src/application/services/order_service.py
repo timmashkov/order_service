@@ -1,4 +1,4 @@
-from typing import Union
+from typing import Any, Union
 from uuid import UUID
 
 from fastapi import Depends
@@ -26,8 +26,8 @@ class OrderService(Singleton):
     async def get_item(self, uuid: Union[str, UUID]):
         return await self.read_repository.get_item(uuid=uuid)
 
-    async def get_items(self):
-        return await self.read_repository.get_items()
+    async def get_items(self, filters: Any = None):
+        return await self.read_repository.find(filters=filters)
 
     async def create_item(self, data: OrderIncomingData):
         return await self.write_repository.create_item(**data.model_dump())

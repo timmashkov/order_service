@@ -2,15 +2,21 @@ from typing import List, Union
 from uuid import UUID
 
 from fastapi import APIRouter, Depends
+from fastapi_filter import FilterDepends
 from pydantic import BaseModel
 
 from application.services.order_item_service import OrderItemService
-from domain.order_item.entities.model import OrderItemIncomingData, OrderItemResultData
+from domain.order_item.entities.model import (
+    OrderItemFilter,
+    OrderItemIncomingData,
+    OrderItemResultData,
+)
 from main.common.router_interface import AbstractRouter
 
 
 class OrderItemRouter(AbstractRouter):
     api_router = APIRouter(prefix="/order_item", tags=["OrderItem"])
+    filters: OrderItemFilter = FilterDepends(OrderItemFilter)
     service_client: OrderItemService = Depends(OrderItemService)
     input_model: BaseModel = OrderItemIncomingData
     output_model: BaseModel = OrderItemResultData
@@ -27,6 +33,7 @@ class OrderItemRouter(AbstractRouter):
     @api_router.get("/", response_model=List[output_model])
     async def get_objects(
         order_provider: OrderItemService = service_client,
+        filters: OrderItemFilter = filters,
     ) -> List[output_model]:
         return await order_provider.get_items()
 

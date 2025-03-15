@@ -12,8 +12,6 @@ if TYPE_CHECKING:
 
 class OrderItem(Base):
 
-    __tablename__ = "order_items"
-
     quantity: Mapped[int] = mapped_column(
         Integer, nullable=False, comment="Количество элементов"
     )
@@ -27,4 +25,6 @@ class OrderItem(Base):
     item_uuid: Mapped[uuid.UUID] = mapped_column(
         UUID, nullable=False, unique=True, index=True, comment="Айди товара"
     )
-    order: Mapped["Order"] = relationship("Order", back_populates="items")
+    order: Mapped["Order"] = relationship(
+        "Order", back_populates="items", lazy="noload"
+    )

@@ -11,7 +11,11 @@ class Base(DeclarativeBase):
 
     @declared_attr.directive
     def __tablename__(cls) -> str:
-        return f"{cls.__name__.lower()}s"
+        table_name = cls.__name__
+        result = table_name[0] + "".join(
+            map(lambda x: "_" + x if x.istitle() else x, table_name[1:])
+        )
+        return f"{result.lower()}s"
 
     uuid: Mapped[UUID] = mapped_column(
         UUID(as_uuid=True),

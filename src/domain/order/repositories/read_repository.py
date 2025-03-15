@@ -1,12 +1,13 @@
-from typing import List, Optional, Union
+from typing import Any, Optional, Union
 from uuid import UUID
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import async_sessionmaker
+from sqlalchemy.orm import contains_eager
 
 from adapters.alchemy_adapter import AlchemyAdapter
 from main.common.repository_interfaces import AbstractReadRepository
-from main.database.models import Order
+from main.database.models import Order, OrderItem
 
 
 class OrderReadRepository(AbstractReadRepository):
@@ -15,14 +16,32 @@ class OrderReadRepository(AbstractReadRepository):
         self._model = Order
         self._session: async_sessionmaker = session_adapter.autocommit_session
 
+    @classmethod
+    def __set_filter(cls, query: select, filters: Any = None) -> select:
+        if filters:
+            query = filters.filter(query)
+        return query
+
+    def __get_query(self) -> select:
+        query = (
+            select(self._model)
+            .outerjoin(OrderItem, Order.uuid == OrderItem.order_id)
+            .options(contains_eager(Order.items))
+        )
+        return query
+
     async def get_item(self, uuid: Union[str, UUID]) -> Optional[Order]:
         async with self._session() as session:
-            stmt = select(self._model).where(self._model.uuid == uuid)
+            stmt = self.__get_query().where(self._model.uuid == uuid)
             answer = await session.execute(stmt)
         return answer.scalar_one_or_none()
 
-    async def get_items(self) -> List[Order]:
+    async def find(
+        self,
+        filters: Any = None,
+    ) -> Union[list, select]:
+        query = self.__get_query()
+        query = self.__set_filter(query, filters)
         async with self._session() as session:
-            stmt = select(self._model).order_by(self._model.created_at)
-            answer = await session.execute(stmt)
-        return list(answer.scalars().all())
+            result = await session.execute(query)
+            return result.scalars().unique().all()
