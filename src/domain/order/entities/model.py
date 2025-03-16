@@ -7,7 +7,7 @@ from pydantic import BaseModel, Field
 
 from domain.order.entities.enums import OrderStatus, PaymentMethod
 from domain.order_item.entities.model import OrderItemResultData
-from main.common.patched_filter import PatchedFilter
+from main.common.base_entities.patched_filter import PatchedFilter
 from main.database.models import Order
 
 

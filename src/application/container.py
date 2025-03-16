@@ -1,10 +1,11 @@
 from adapters.alchemy_adapter import AlchemyAdapter
+from adapters.rabbit_adapter import RabbitMQAdapter
 from application.config import settings
 from domain.order.repositories.read_repository import OrderReadRepository
 from domain.order.repositories.write_repository import OrderWriteRepository
 from domain.order_item.repositories.read_repository import OrderItemReadRepository
 from domain.order_item.repositories.write_repository import OrderItemWriteRepository
-from main.common.singleton import OnlyContainer, Singleton
+from main.common.base_entities.singleton import OnlyContainer, Singleton
 
 
 class Container(Singleton):
@@ -18,6 +19,11 @@ class Container(Singleton):
         port=settings.POSTGRES.port,
         database=settings.POSTGRES.database,
         echo=settings.POSTGRES.echo,
+    )
+
+    rabbit_manager = OnlyContainer(
+        RabbitMQAdapter,
+        **settings.RABBIT_MQ,
     )
 
     order_write_manager = OnlyContainer(

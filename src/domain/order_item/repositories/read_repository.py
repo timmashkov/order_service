@@ -5,7 +5,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import async_sessionmaker
 
 from adapters.alchemy_adapter import AlchemyAdapter
-from main.common.repository_interfaces import AbstractReadRepository
+from main.common.interfaces.repository_interfaces import AbstractReadRepository
 from main.database.models import OrderItem
 
 

@@ -1,6 +1,6 @@
 [project]
 name = "order-service"
-version = "0.4.0"
+version = "0.5.0"
 description = ""
 authors = [
     {name = "timmashkov",email = "bodomizer@yandex.ru"}
@@ -18,6 +18,8 @@ dependencies = [
     "black (>=25.1.0,<26.0.0)",
     "isort (>=6.0.1,<7.0.0)",
     "fastapi-filter (>=2.0.1,<3.0.0)",
+    "aio-pika (>=9.5.5,<10.0.0)",
+    "orjson (>=3.10.15,<4.0.0)",
 ]
 
 

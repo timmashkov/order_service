@@ -4,7 +4,7 @@ from typing import Any
 from fastapi import APIRouter
 from pydantic import BaseModel
 
-from main.common.patched_filter import PatchedFilter
+from main.common.base_entities.patched_filter import PatchedFilter
 
 
 class AbstractRouter(ABC):

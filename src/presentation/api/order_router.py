@@ -7,7 +7,7 @@ from pydantic import BaseModel
 
 from application.services.order_service import OrderService
 from domain.order.entities.model import OrderFilter, OrderIncomingData, OrderResultData
-from main.common.router_interface import AbstractRouter
+from main.common.interfaces.router_interface import AbstractRouter
 
 
 class OrderRouter(AbstractRouter):
