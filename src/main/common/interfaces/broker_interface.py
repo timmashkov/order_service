@@ -30,6 +30,10 @@ class AbstractBroker(ABC):
             raise DeserializationError(data=message)
 
     @abstractmethod
+    async def connect(self) -> None:
+        pass
+
+    @abstractmethod
     async def init_queue(self, routing_key: str, **kwargs: Any) -> None:
         pass
 

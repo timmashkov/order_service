@@ -21,8 +21,10 @@ default:
     mat_view_time: 15
   RABBIT_MQ:
     host: rabbit_mq
-    port: 5432
+    port: 5672
     login: rabbit_mq
     password: rabbit_mq
     protocol: amqp
     timeout: 20
+  RABBIT_ROUTING_KEYS:
+    test_routing_key: test_routing_key
