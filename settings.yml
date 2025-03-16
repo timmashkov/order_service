@@ -19,3 +19,10 @@ default:
     pool_max_size: 20
     pool_timeout: 90
     mat_view_time: 15
+  RABBIT_MQ:
+    host: rabbit_mq
+    port: 5432
+    login: rabbit_mq
+    password: rabbit_mq
+    protocol: amqp
+    timeout: 20

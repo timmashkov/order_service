@@ -11,8 +11,8 @@ from main.common.exceptions.serialize_exceptions import (
 
 class AbstractBroker(ABC):
 
-    @classmethod
-    def serialize_message(cls, message: Union[str, bytes, list, dict]) -> bytes:
+    @staticmethod
+    def serialize_message(message: Union[str, bytes, list, dict]) -> bytes:
         try:
             if isinstance(message, str):
                 return message.encode("utf-8")
@@ -22,8 +22,8 @@ class AbstractBroker(ABC):
         except (ValueError, TypeError):
             raise SerializationError(data=message)
 
-    @classmethod
-    def deserialize_message(cls, message: bytes) -> Any:
+    @staticmethod
+    def deserialize_message(message: bytes) -> Any:
         try:
             return loads(message)
         except (ValueError, TypeError):
@@ -47,8 +47,4 @@ class AbstractBroker(ABC):
 
     @abstractmethod
     async def get_message(self, routing_key: str) -> Any:
-        pass
-
-    @abstractmethod
-    async def get_messages(self, routing_key: str) -> Any:
         pass
