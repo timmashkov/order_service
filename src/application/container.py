@@ -4,7 +4,7 @@ from domain.order.repositories.read_repository import OrderReadRepository
 from domain.order.repositories.write_repository import OrderWriteRepository
 from domain.order_item.repositories.read_repository import OrderItemReadRepository
 from domain.order_item.repositories.write_repository import OrderItemWriteRepository
-from main.common.singleton import OnlyContainer, Singleton
+from main.common.base_entities.singleton import OnlyContainer, Singleton
 
 
 class Container(Singleton):

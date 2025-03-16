@@ -1,0 +1,2 @@
+class RabbitMQAdapter:
+    pass

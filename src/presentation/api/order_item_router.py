@@ -11,7 +11,7 @@ from domain.order_item.entities.model import (
     OrderItemIncomingData,
     OrderItemResultData,
 )
-from main.common.router_interface import AbstractRouter
+from main.common.interfaces.router_interface import AbstractRouter
 
 
 class OrderItemRouter(AbstractRouter):

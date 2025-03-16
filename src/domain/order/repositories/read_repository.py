@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import async_sessionmaker
 from sqlalchemy.orm import contains_eager
 
 from adapters.alchemy_adapter import AlchemyAdapter
-from main.common.repository_interfaces import AbstractReadRepository
+from main.common.interfaces.repository_interfaces import AbstractReadRepository
 from main.database.models import Order, OrderItem
 
 

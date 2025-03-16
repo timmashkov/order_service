@@ -4,7 +4,7 @@ from uuid import UUID
 
 from pydantic import BaseModel, Field
 
-from main.common.patched_filter import PatchedFilter
+from main.common.base_entities.patched_filter import PatchedFilter
 from main.database.models import OrderItem
 
 

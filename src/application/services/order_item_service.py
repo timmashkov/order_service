@@ -5,11 +5,11 @@ from fastapi import Depends
 
 from application.container import Container
 from domain.order_item.entities.model import OrderItemIncomingData
-from main.common.repository_interfaces import (
+from main.common.base_entities.singleton import Singleton
+from main.common.interfaces.repository_interfaces import (
     AbstractReadRepository,
     AbstractWriteRepository,
 )
-from main.common.singleton import Singleton
 
 
 class OrderItemService(Singleton):
