@@ -4,8 +4,8 @@ from uuid import UUID
 
 from pydantic import BaseModel, Field
 
-from main.common.base_entities.patched_filter import PatchedFilter
-from main.database.models import OrderItem
+from infrastructure.common.base_entities.patched_filter import PatchedFilter
+from infrastructure.database.models import OrderItem
 
 
 class OrderItemIncomingData(BaseModel):

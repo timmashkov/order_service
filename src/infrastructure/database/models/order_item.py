@@ -4,10 +4,10 @@ from typing import TYPE_CHECKING
 from sqlalchemy import UUID, ForeignKey, Integer
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from main.database.models import Base
+from infrastructure.database.models import Base
 
 if TYPE_CHECKING:
-    from main.database.models import Order
+    from infrastructure.database.models import Order
 
 
 class OrderItem(Base):
@@ -26,5 +26,5 @@ class OrderItem(Base):
         UUID, nullable=False, unique=True, index=True, comment="Айди товара"
     )
     order: Mapped["Order"] = relationship(
-        "Order", back_populates="items", lazy="noload"
+        "Order", back_populates="items", lazy="joined"
     )

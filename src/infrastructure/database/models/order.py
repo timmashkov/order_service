@@ -7,10 +7,10 @@ from sqlalchemy.dialects.postgresql import ENUM, UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from domain.order.entities.enums import OrderStatus, PaymentMethod
-from main.database.models import Base
+from infrastructure.database.models import Base
 
 if TYPE_CHECKING:
-    from main.database.models import OrderItem
+    from infrastructure.database.models import OrderItem
 
 
 class Order(Base):
@@ -39,4 +39,5 @@ class Order(Base):
         cascade="all, delete-orphan",
         passive_updates=True,
         passive_deletes=True,
+        lazy="joined",
     )
