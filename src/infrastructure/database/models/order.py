@@ -22,8 +22,12 @@ class Order(Base):
         ENUM(OrderStatus, name="order_status"), comment="Статус заказа"
     )
     address: Mapped[str] = mapped_column(Text, nullable=False, comment="Адрес доставки")
-    price: Mapped[Decimal] = mapped_column(
-        DECIMAL, nullable=False, comment="Стоимость заказа"
+    subtotal: Mapped[Decimal] = mapped_column(
+        DECIMAL, nullable=False, comment="Стоимость заказа без скидок"
+    )
+    discount: Mapped[Decimal] = mapped_column(DECIMAL, nullable=False, comment="Скидка")
+    total_price: Mapped[Decimal] = mapped_column(
+        DECIMAL, nullable=False, comment="Итоговая стоимость заказа"
     )
     is_payed: Mapped[bool] = mapped_column(
         Boolean, default=False, comment="Оплачен ли заказ"
